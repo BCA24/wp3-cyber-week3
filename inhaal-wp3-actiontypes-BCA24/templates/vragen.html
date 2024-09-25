@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vragen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='vragen.css') }}">
+</head>
+<body>
+    <div id="statement">
+    </div>
+
+    <button id="previous-statement">Previous Statement</button>
+    <button id="next-statement">Next Statement</button>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var results = []; 
+        
+            function loadStatement(url) {
+                $.post(url, function(data) {
+                    if (data) {
+                        var html = '<h2>Statement ' + data.statement_number + '</h2>';
+                        for (var i = 0; i < data.statement_choices.length; i++) {
+                            var choice = data.statement_choices[i];
+                            html += '<input type="checkbox" class="choice" id="choice' + choice.choice_number + '" data-result="' + choice.choice_result + '">';
+                            html += '<label for="choice' + choice.choice_number + '">' + choice.choice_number + '. ' + choice.choice_text + '</label><br>';
+                        }
+                        $("#statement").html(html);
+        
+                        if (data.statement_number === 1) {
+                            $("#previous-statement").hide();
+                        } else {
+                            $("#previous-statement").show();
+                        }
+        
+                        if (data.statement_number === 20) {
+                            $("#next-statement").text('See Result');
+                        } else {
+                            $("#next-statement").text('Next Statement');
+                        }
+                    } else {
+                        $("#statement").html('<p>No more statements.</p>');
+                    }
+                });
+            }
+        
+                        $("#next-statement").click(function() {
+                if ($('.choice:checked').length > 0) {
+                    results.push($('.choice:checked').attr('data-result')); 
+                    if ($(this).text() === 'See Result') {
+                        $.post('/resultaat', {result: results.join('')}, function(response) {
+                            window.location.href = "/resultaat";
+                        });
+                    } else {
+                        loadStatement("/next_statement");
+                    }
+                } else {
+                    alert('Please select a choice before moving to the next statement.');
+                }
+            });
+        
+            $("#previous-statement").click(function() {
+                loadStatement("/previous_statement");
+            });
+        
+            loadStatement("/next_statement");
+        
+            $(document).on('change', '.choice', function() {
+                $('.choice').not(this).prop('checked', false);
+            });
+        });
+        </script>
+<div id="progress-bar" style="width:0%; height:20px; background-color:green;"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+function updateProgress() {
+    $.ajax({
+        url: '/vragen/progress',  
+        success: function(data) {
+            $('#progress-bar').css('width', data.progress + '%');
+        }
+    });
+}
+
+setInterval(updateProgress, 1000);
+</script>
+</body>
+</html>

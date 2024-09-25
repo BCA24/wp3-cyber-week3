@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='docentMain.css') }}">
+</head>
+<body>
+
+    <div class="header">
+        <h1>Docent Beheer</h1>
+    </div>  
+
+    <div class="bekijk">
+        <a href="http://127.0.0.1:5001/overzicht">
+            <button>Bekijk Student</button>
+        </a>
+    </div>
+  
+    <div class ="createST">
+        <a href="http://127.0.0.1:5001/create_student">
+        <button>Creëer student</button>
+    </div>
+
+    <div class = "createDO">
+        <a href="http://127.0.0.1:5001/create_docent">
+        <button>Creëer docent</button>
+    </div>
+
+</body>
+</html>

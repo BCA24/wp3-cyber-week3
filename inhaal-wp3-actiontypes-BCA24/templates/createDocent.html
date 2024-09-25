@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myers-Briggs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='createDocent.css') }}">
+</head>
+<body>
+
+    
+    <div class="container">
+        <h1>Docent aanmaken</h1>
+        <form action="/create_docent" method="post">  
+                      
+            <label for="Docentnaam">Docentnaam:</label>
+            <input type="text" id="Docentnaam" name="Docentnaam" required>
+            
+            <br>
+
+            <label for="Gebruikersnaam">Gebruikersnaam:</label>
+            <input type="text" id="Gebruikersnaam" name="Gebruikersnaam" required>
+
+            <br>
+
+            <label for="Wachtwoord">Wachtwoord:</label>
+            <input type="text" id="Wachtwoord" name="Wachtwoord" required>
+
+            <br>
+
+            <label for="is_admin">is_admin:</label>
+            <input type="number" id="is_admin" name="is_admin" min="0" max="1" required>
+
+
+            <br>
+            <button type="submit">Voeg toe</button>
+        </form>
+    </div>
+
+</body>
+</html>

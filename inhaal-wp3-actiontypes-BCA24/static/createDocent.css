@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #319c2e;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Change align-items to flex-start */
+    height: 200vh;
+}
+.container {
+    position: absolute;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+    top: 34%; /* Change bottom to top */
+    left: 40%;
+    transform: translateY(-50%); /* Add transform property to vertically center the text */
+    padding: 25px;
+    background-color: #ffffff; /* Set background color to white */
+    margin: 20px;
+    border-radius: 4px;
+    width: 400px;
+}
+
+label {
+    margin-bottom: 10px; /* Adjust the value as needed */
+}
+
+input {
+    margin-bottom: 20px; /* Adjust the value as needed */
+}

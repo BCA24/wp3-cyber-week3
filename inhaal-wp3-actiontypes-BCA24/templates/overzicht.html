@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>studenten overzicht</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='overzicht.css') }}">
+</head>
+<body>
+    <h1>Overzicht</h1>
+
+    <table border="1px">
+        <thead>
+            <tr>
+                <th>Studentnummer</th>
+                <th>studentklas</th>
+                <th>studentnaam</th>
+                <th>test gedaan</th>
+                <th>tijdstip af</th>
+                <th>Action type</th>
+                <th>Reset</th> 
+                <th>Verwijder</th>
+                <th>Details</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for studentInfo in students %}
+            <tr>
+                <td>{{ studentInfo.studentnummer }}</td>
+                <td>{{ studentInfo.studentnaam }}</td>
+                <td>{{ studentInfo.studentklas }}</td>
+                <td>{{ studentInfo.test_gedaan }}</td>
+                <td>{{ studentInfo.tijdstip_af }}</td>
+                <td>{{ studentInfo.Action_type }}</td>
+                <td>
+                    <form action="{{ url_for('overzicht') }}" method="post">
+                        <input type="hidden" name="studentnaam" value="{{ studentInfo.studentnummer }}">
+                        <input type="hidden" name="action" value="reset">
+                        <button type="submit" onclick="return confirm('Weet u zeker dat u {{ studentInfo.studentnaam }}\'s test wilt resetten?')">RESET</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="{{ url_for('overzicht') }}" method="post">
+                        <input type="hidden" name="studentnaam" value="{{ studentInfo.studentnummer }}">
+                        <input type="hidden" name="action" value="delete">
+                        <button type="submit" onclick="return confirm('Weet u zeker dat u {{ studentInfo.studentnaam }}\ wilt verwijderen van het database?')">VERWIJDER</button>
+                    </form>
+                </td>
+                <td>
+                    <a href="{{ url_for('details', studentnaam=studentInfo.studentnaam) }}">DETAILS</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</body>
+</html>
